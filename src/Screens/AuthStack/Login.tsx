@@ -10,8 +10,13 @@ import {
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {ArrowLeftIcon} from 'react-native-heroicons/solid';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import { AuthRootStackParamList } from '../../navigation/AuthStack';
+
+
+
 const Login = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NativeStackNavigationProp<AuthRootStackParamList>>();
   return (
     <SafeAreaView className="flex-1">
       <View className="flex-row justify-start">
@@ -22,10 +27,10 @@ const Login = () => {
         </TouchableOpacity>
       </View>
       <Text className="text-4xl text-center font-bold text-blue-900 ">
-        Login here
+        Welcome Back!
       </Text>
       <View
-        className="flex-1  bg-white my-5  p-4 space-y-2"
+        className="flex-1  bg-white my-5  p-6 space-y-2"
         style={{borderTopLeftRadius: 50, borderTopRightRadius: 50}}>
         <Text className="justify-center text-xl text-gray-700 font-bold my-2">
           {' '}
@@ -44,15 +49,17 @@ const Login = () => {
           placeholder="Password"
         />
 
-        <TouchableOpacity className="py-3 bg-yellow-400 rounded-xl">
-          <Text className="font-xl font-bold text-center text-gray-700">
+        <TouchableOpacity className="py-4  bg-yellow-400 rounded-xl">
+          <Text className="text-xl font-bold text-center text-gray-700">
             LogIn
           </Text>
         </TouchableOpacity>
-        <View>
-          <Text className="text-center text-gray-700">
+        <View  >
+          <Text className="text-center justify-center align-middle text-gray-700">
             Don't have an account?{' '}
+            <TouchableOpacity onPress={()=>navigation.navigate('Signup')}>
             <Text className="text-yellow-400">Sign Up</Text>
+            </TouchableOpacity>
           </Text>
         </View>
         <View className="flex align-middle justify-center ">
