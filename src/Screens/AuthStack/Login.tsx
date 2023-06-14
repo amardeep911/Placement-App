@@ -19,14 +19,7 @@ const Login = () => {
   const navigation = useNavigation<NativeStackNavigationProp<AuthRootStackParamList>>();
   return (
     <SafeAreaView className="flex-1">
-      <View className="flex-row justify-start">
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          className="bg-yellow-500 p-2 rounded-tr-2xl mt-3 rounded-bl-2xl ml-4 ">
-          <ArrowLeftIcon size="25" color="black" />
-        </TouchableOpacity>
-      </View>
-      <Text className="text-4xl text-center font-bold text-blue-900 ">
+      <Text className="text-4xl text-center font-bold mt-8 text-blue-900 ">
         Welcome Back!
       </Text>
       <View
