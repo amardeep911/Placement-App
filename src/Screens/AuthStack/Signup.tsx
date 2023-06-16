@@ -13,7 +13,17 @@ import {useNavigation} from '@react-navigation/native';
 import {TextInput} from 'react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {AuthRootStackParamList} from '../../navigation/AuthStack';
+import {useState} from 'react';
+
 const Signup = () => {
+
+  const [name, setname] = useState('');
+  const [email, setemail] = useState('');
+  const [password, setpassword] = useState('');
+  const [confirmpassword, setconfirmpassword] = useState('');
+
+ 
+
   const navigation =
     useNavigation<NativeStackNavigationProp<AuthRootStackParamList>>();
 
@@ -32,6 +42,15 @@ const Signup = () => {
       <ScrollView
         className="flex-1  bg-white my-5  p-6 space-y-2"
         style={{borderTopLeftRadius: 50, borderTopRightRadius: 50}}>
+           <Text className="justify-center text-xl text-gray-700 font-bold my-2">
+          {' '}
+          Name
+        </Text>
+        <TextInput
+          className="p-4 bg-gray-200 text-gray-700 rounded-2xl mb-3"
+          placeholder="Name"
+          onChangeText={(text)=>setname(text)}
+        />
         <Text className="justify-center text-xl text-gray-700 font-bold my-2">
           {' '}
           Email
@@ -39,6 +58,7 @@ const Signup = () => {
         <TextInput
           className="p-4 bg-gray-200 text-gray-700 rounded-2xl mb-3"
           placeholder="Username"
+          onChangeText={(text)=>setemail(text)}
         />
         <Text className="justify-center text-xl text-gray-700 font-bold">
           {' '}
@@ -47,6 +67,7 @@ const Signup = () => {
         <TextInput
           className="p-4 bg-gray-200 text-gray-700 rounded-2xl mb-3"
           placeholder="Password"
+          onChangeText={(text)=>setpassword(text)}
         />
         <Text className="justify-center text-xl text-gray-700 font-bold">
           {' '}
@@ -55,6 +76,7 @@ const Signup = () => {
         <TextInput
           className="p-4 bg-gray-200 text-gray-700 rounded-2xl mb-3"
           placeholder="Confirm password"
+          onChangeText={(text)=>setconfirmpassword(text)}
         />
 
         <TouchableOpacity className="py-4  bg-yellow-400 rounded-xl">
@@ -75,10 +97,12 @@ const Signup = () => {
             Or
           </Text>
         </View>
-        <View className="flex-row justify-center py-5">
+        <View className="flex-row justify-center py-2">
           <TouchableOpacity
             className="py-3 bg-gray-200 items-center justify-center rounded-xl "
-            style={{width: 50, height: 50}}>
+            style={{width: 50, height: 50}}
+            
+            >
             <Image
               style={{
                 width: 40,

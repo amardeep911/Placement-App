@@ -6,16 +6,22 @@ import {
   TouchableOpacity,
   TextInput,
   Image,
+  
 } from 'react-native';
+import { useState } from 'react';
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
-import {ArrowLeftIcon} from 'react-native-heroicons/solid';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import { AuthRootStackParamList } from '../../navigation/AuthStack';
 
 
 
 const Login = () => {
+
+
+
+
+
   const navigation = useNavigation<NativeStackNavigationProp<AuthRootStackParamList>>();
   return (
     <SafeAreaView className="flex-1">
@@ -31,7 +37,7 @@ const Login = () => {
         </Text>
         <TextInput
           className="p-4 bg-gray-200 text-gray-700 rounded-2xl mb-3"
-          placeholder="username"
+          placeholder="Email"
         />
         <Text className="justify-center text-xl text-gray-700 font-bold">
           {' '}
