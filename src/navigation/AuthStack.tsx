@@ -5,6 +5,7 @@ import React from 'react'
 
 import Login from '../Screens/AuthStack/Login';
 import Signup from '../Screens/AuthStack/Signup';
+import LoadingStack from '../navigation/LoadingStack';
 
 export type AuthRootStackParamList = {
     Login: undefined;

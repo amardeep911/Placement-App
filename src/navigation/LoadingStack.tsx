@@ -1,12 +1,11 @@
 import { View, Text } from 'react-native'
 import React from 'react'
+import Lottie from 'lottie-react-native';
 
 const LoadingStack = () => {
   return (
-    <View>
-      <Text className='text-slate-950 text-5xl'>LoadingStack</Text>
-    </View>
-  )
+      <Lottie source={require('../assets/loader_animation.json')} autoPlay loop />
+  );
 }
 
 export default LoadingStack
