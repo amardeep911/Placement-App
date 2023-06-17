@@ -5,6 +5,7 @@ import {
   Image,
   KeyboardAvoidingView,
   ScrollView,
+  Alert,
 } from 'react-native';
 import React from 'react';
 import {TouchableOpacity} from 'react-native';
@@ -14,21 +15,37 @@ import {TextInput} from 'react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {AuthRootStackParamList} from '../../navigation/AuthStack';
 import {useState} from 'react';
-
+import { useAppDispatch, useAppSelector } from '../../utils/hooks';
+import { registerUser } from '../../Redux/actions/action';
+import { addUser } from '../../Redux/slices/AuthUserSlice';
+import { useDispatch, useSelector } from 'react-redux';
 const Signup = () => {
 
   const [name, setname] = useState('');
   const [email, setemail] = useState('');
   const [password, setpassword] = useState('');
   const [confirmpassword, setconfirmpassword] = useState('');
+  const data = {
+    email:"tesdssxxnsdfsdfxsdsdfsfsfdsdffdffsdft1@gmail.com",
+    name:"sdfsdf",
+    password: "hello",
+    password2: "hello"
+  };
+  const dispatch = useAppDispatch();
 
- 
+  const loading = useAppSelector(state => state.authUser.loading);
+  const accessToken = useAppSelector(state => state.authUser.accessToken);
+  const refreshToken = useAppSelector(state => state.authUser.refreshToken);
+  const error = useAppSelector(state => state.authUser.error);
 
+  
+  
   const navigation =
     useNavigation<NativeStackNavigationProp<AuthRootStackParamList>>();
 
   return (
     <SafeAreaView className="flex-1">
+
       <View className="flex-row justify-start">
         <TouchableOpacity
           onPress={() => navigation.goBack()}
@@ -79,7 +96,10 @@ const Signup = () => {
           onChangeText={(text)=>setconfirmpassword(text)}
         />
 
-        <TouchableOpacity className="py-4  bg-yellow-400 rounded-xl">
+        <TouchableOpacity className="py-4  bg-yellow-400 rounded-xl"
+                  onPress= {(e) => dispatch(registerUser(data))}
+                  
+        >
           <Text className="text-xl font-bold text-center text-gray-700">
             SignUp
           </Text>
@@ -92,6 +112,7 @@ const Signup = () => {
             </TouchableOpacity>
           </Text>
         </View>
+
         <View className="flex align-middle justify-center ">
           <Text className="text-xl text-gray-700 text-center font-bold">
             Or
@@ -101,7 +122,6 @@ const Signup = () => {
           <TouchableOpacity
             className="py-3 bg-gray-200 items-center justify-center rounded-xl "
             style={{width: 50, height: 50}}
-            
             >
             <Image
               style={{

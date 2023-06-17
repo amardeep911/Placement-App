@@ -8,17 +8,16 @@ import {
   Image,
   
 } from 'react-native';
-import { useState } from 'react';
+
+
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import { AuthRootStackParamList } from '../../navigation/AuthStack';
 
-
+import { useAppSelector } from '../../utils/hooks';
 
 const Login = () => {
-
-
 
 
 
