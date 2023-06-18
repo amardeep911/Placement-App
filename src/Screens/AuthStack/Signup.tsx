@@ -1,6 +1,6 @@
 import {
   View,
-  Text,
+
   SafeAreaView,
   Image,
   KeyboardAvoidingView,
@@ -10,10 +10,11 @@ import {
 } from 'react-native';
 import React from 'react';
 import {useEffect} from 'react';
+import { Text } from 'react-native-paper';
 import {TouchableOpacity} from 'react-native';
 import {ArrowLeftIcon} from 'react-native-heroicons/solid';
 import {useNavigation} from '@react-navigation/native';
-import {TextInput} from 'react-native';
+import { Button } from 'react-native-paper';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {AuthRootStackParamList} from '../../navigation/AuthStack';
 import {useState} from 'react';
@@ -21,6 +22,7 @@ import {useAppDispatch, useAppSelector} from '../../utils/hooks';
 import {registerUser} from '../../Redux/actions/action';
 import { registerDatatypes } from '../../utils/types';
 import {addUser} from '../../Redux/slices/AuthUserSlice';
+import { TextInput } from 'react-native-paper';
 
 import {useDispatch, useSelector} from 'react-redux';
 const Signup = () => {
@@ -35,6 +37,7 @@ const Signup = () => {
     password: password,
     password2: password2,
   };
+  console.log(name)
   const dispatch = useAppDispatch();
 
   const navigation =
@@ -66,12 +69,14 @@ const Signup = () => {
       <View className="flex-row justify-start">
         <TouchableOpacity
           onPress={() => navigation.goBack()}
-          className="bg-yellow-500 p-2 rounded-tr-2xl mt-3 rounded-bl-2xl ml-4 ">
-          <ArrowLeftIcon size="25" color="black" />
+          className=" p-2 mt-3 ml-4 ">
+          <ArrowLeftIcon size="25" color={'black'} />
         </TouchableOpacity>
       </View>
-      <Text className="text-4xl text-center font-bold text-blue-900 ">
-        SignUp
+      <Text className="text-center  text-blue-900 font-extrabold "
+        variant='displaySmall'
+      >
+        Sign Up
       </Text>
       {error && (
         <Text className="text-red-500 text-center mt-2 font-bold text-xl">
@@ -82,51 +87,79 @@ const Signup = () => {
       <ScrollView
         className="flex-1  bg-white my-5  p-6 space-y-2"
         style={{borderTopLeftRadius: 50, borderTopRightRadius: 50}}>
-        <Text className="justify-center text-xl text-gray-700 font-bold my-2">
+        <Text className="justify-center  text-black  my-2"
+        variant='bodyLarge'
+        >
           {' '}
           Name
         </Text>
-        <TextInput
-          className="p-4 bg-gray-200 text-gray-700 rounded-2xl mb-3"
+        <TextInput   
           placeholder="Name"
+          className='rounded-xl'
+          mode='flat'
+          underlineColor='transparent'
+
+
           onChangeText={text => setname(text)}
         />
-        <Text className="justify-center text-xl text-gray-700 font-bold my-2">
+        <Text className="justify-center text-black my-2"
+         variant='bodyLarge'
+        >
           {' '}
           Email
         </Text>
-        <TextInput
-          className="p-4 bg-gray-200 text-gray-700 rounded-2xl mb-3"
-          placeholder="Username"
+        <TextInput   
+          placeholder="Email"
+          className='rounded-xl'
+          underlineColor='transparent'
+          mode='flat'
+
           onChangeText={text => setemail(text)}
         />
-        <Text className="justify-center text-xl text-gray-700 font-bold">
+        <Text className="justify-center  text-black"
+         variant='bodyLarge'
+        >
           {' '}
           Password
         </Text>
-        <TextInput
-          className="p-4 bg-gray-200 text-gray-700 rounded-2xl mb-3"
+        <TextInput   
           placeholder="Password"
+          className='rounded-xl'
+          underlineColor='transparent'
+          mode='flat'
+         
+
           onChangeText={text => setpassword(text)}
         />
-        <Text className="justify-center text-xl text-gray-700 font-bold">
+        <Text className="justify-center  text-black "
+        variant='bodyLarge'
+        >
           {' '}
           Confirm Password
         </Text>
-        <TextInput
-          className="p-4 bg-gray-200 text-gray-700 rounded-2xl mb-3"
-          placeholder="Confirm password"
+        <TextInput   
+          placeholder="Confirm Password"
+          className='rounded-xl'
+          mode='flat'
+          error={password !== password2 }  
+          
+          
+          underlineColor='transparent'
+
           onChangeText={text => setpassword2(text)}
         />
+        <View className='my-6' >
 
-        <TouchableOpacity
-          className="py-4  bg-yellow-400 rounded-xl"
+        <Button
+          mode='contained'
+        className='mt-3'
+          loading={loading}
           onPress={(e: GestureResponderEvent)=> handleRegister(data)}>
-          <Text className="text-xl font-bold text-center text-gray-700">
+          <Text className="text-xl  font-bold text-center text-white">
             SignUp
           </Text>
-        </TouchableOpacity>
-        {loading && <Text className="text-center text-xl font-bold text-gray-700">Loading...</Text> }
+        </Button>
+            </View>
         <View>
           <Text className="text-center justify-center align-middle text-gray-700">
             Have an account?{' '}
