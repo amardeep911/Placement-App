@@ -43,7 +43,7 @@ const AuthUserSLice = createSlice({
     builder.addCase(registerUser.rejected, (state, action:any ) => {
         if(action.payload){
             state.loading = false;
-            state.error = action.payload.errors.email[0];
+            state.error = action.payload.errors.name[0];
         }
         else{
             state.loading = false;

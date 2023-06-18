@@ -37,7 +37,7 @@ const Signup = () => {
     password: password,
     password2: password2,
   };
-  console.log(name)
+
   const dispatch = useAppDispatch();
 
   const navigation =
@@ -99,7 +99,7 @@ const Signup = () => {
           mode='flat'
           underlineColor='transparent'
 
-
+          returnKeyType='next'
           onChangeText={text => setname(text)}
         />
         <Text className="justify-center text-black my-2"
@@ -113,6 +113,8 @@ const Signup = () => {
           className='rounded-xl'
           underlineColor='transparent'
           mode='flat'
+          returnKeyType='next' 
+
 
           onChangeText={text => setemail(text)}
         />
@@ -127,8 +129,9 @@ const Signup = () => {
           className='rounded-xl'
           underlineColor='transparent'
           mode='flat'
-         
-
+         secureTextEntry={true}
+        returnKeyType='next'
+        
           onChangeText={text => setpassword(text)}
         />
         <Text className="justify-center  text-black "
@@ -142,7 +145,7 @@ const Signup = () => {
           className='rounded-xl'
           mode='flat'
           error={password !== password2 }  
-          
+          secureTextEntry={true}
           
           underlineColor='transparent'
 

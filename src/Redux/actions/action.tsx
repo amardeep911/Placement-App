@@ -25,7 +25,7 @@ export const registerUser = createAsyncThunk(
     'authUser/registerUser',
     async (data: registerDatatypes , { rejectWithValue }) => {
       try {
-        const response = await axios.post('http://127.0.0.1:8000/api/user/register/', data);
+        const response = await axios.post('http://rishi2602.pythonanywhere.com/api/register/', data);
         return response.data;
       } catch (error: any) {
           if (axios.isAxiosError(error)) {
