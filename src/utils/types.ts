@@ -1,12 +1,23 @@
+
+type Token = {
+    refresh: string;
+    access: string;
+  };
+  
+ 
+
 export type ReduxModel = {
-    auth: boolean,
-    user: string,
-    accessToken: string,
-    refreshToken: string,
     loading: boolean,
     error: string,
     success: boolean,
+    accessToken: string,
+    refreshToken: string,
 };
+
+export type loginDatatypes = {
+    email: string,
+    password: string,
+}
 
 export type registerDatatypes = {
     email: string,

@@ -43,8 +43,8 @@ const Signup = () => {
 
   useEffect(() => {
     if (success) {
-      navigation.navigate('Login');
       dispatch(addUser({success: false}));
+      navigation.navigate('Login');
       Alert.alert('User Registered Successfully');
     }
   }, [success]);
@@ -59,7 +59,7 @@ const Signup = () => {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-violet-100">
+    <SafeAreaView className="flex-1 bg-violet-50">
       <View className="flex-row justify-start  ">
         <TouchableOpacity
           onPress={() => navigation.goBack()}
@@ -91,6 +91,7 @@ const Signup = () => {
           mode="flat"
           underlineColor="transparent"
           returnKeyType="next"
+          
           onChangeText={text => setname(text)}
         />
         <Text className="justify-center text-black my-2" variant="bodyLarge">
@@ -156,7 +157,7 @@ const Signup = () => {
           </TouchableOpacity>
         </View>
 
-        <View className="flex align-middle justify-center ">
+        {/* <View className="flex align-middle justify-center ">
           <Text className="text-xl text-gray-700 text-center font-bold">
             Or
           </Text>
@@ -176,7 +177,7 @@ const Signup = () => {
               source={require('../../assets/images/google.png')}
             />
           </TouchableOpacity>
-        </View>
+        </View> */}
       </ScrollView>
     </SafeAreaView>
   );

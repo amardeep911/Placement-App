@@ -1,32 +1,62 @@
 import {
   View,
-  Text,
   SafeAreaView,
   Touchable,
   TouchableOpacity,
-  TextInput,
   Image,
-  
 } from 'react-native';
-
-
+import {Text} from 'react-native-paper';
+import {TextInput} from 'react-native-paper';
+import {useEffect, useState} from 'react';
+import {useAppDispatch} from '../../utils/hooks';
+import {useAppSelector} from '../../utils/hooks';
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import { AuthRootStackParamList } from '../../navigation/AuthStack';
+import {AuthRootStackParamList} from '../../navigation/AuthStack';
+import {loginDatatypes} from '../../utils/types';
+import {Alert} from 'react-native';
+import {Button} from 'react-native-paper';
+import {GestureResponderEvent} from 'react-native';
 
-import { useAppSelector } from '../../utils/hooks';
-
+import {loginUser} from '../../Redux/actions/action';
 const Login = () => {
+  const [email, setemail] = useState('');
+  const [password, setpassword] = useState('');
 
+  const loginData = {
+    email: email,
+    password: password,
+  };
+  const error = useAppSelector(state => state.authUser.error);
+  const loading = useAppSelector(state => state.authUser.loading);
+  const success = useAppSelector(state => state.authUser.success);
+  const dispatch = useAppDispatch();
 
-
-  const navigation = useNavigation<NativeStackNavigationProp<AuthRootStackParamList>>();
+  const handleLogin = (data: loginDatatypes) => {
+    dispatch(loginUser(data));
+  };
+  const handleForgotPassword = () => {
+    Alert.alert('Forgot Password'
+    ,'Feature under development');
+  };
+  useEffect(() => {
+    if (success) {
+      Alert.alert('User Logged in Successfully');
+    }
+  }, [success]);
+  const navigation =
+    useNavigation<NativeStackNavigationProp<AuthRootStackParamList>>();
   return (
-    <SafeAreaView className="flex-1">
-      <Text className="text-4xl text-center font-bold mt-8 text-blue-900 ">
-        Welcome Back!
+    <SafeAreaView className="flex-1 bg-violet-50">
+      <Text className="text-4xl text-center font-extrabold mt-8 text-blue-900 ">
+        Login
       </Text>
+      {error && (
+        <Text className="text-red-500 text-center mt-2 font-bold text-xl">
+          {error}
+        </Text>
+      )}
       <View
         className="flex-1  bg-white my-5  p-6 space-y-2"
         style={{borderTopLeftRadius: 50, borderTopRightRadius: 50}}>
@@ -35,32 +65,59 @@ const Login = () => {
           Email
         </Text>
         <TextInput
-          className="p-4 bg-gray-200 text-gray-700 rounded-2xl mb-3"
           placeholder="Email"
+          className="rounded-xl"
+          underlineColor="transparent"
+          mode="flat"
+          returnKeyType="next"
+          keyboardType="email-address"
+          onChangeText={text => setemail(text)}
         />
         <Text className="justify-center text-xl text-gray-700 font-bold">
           {' '}
           Password
         </Text>
         <TextInput
-          className="p-4 bg-gray-200 text-gray-700 rounded-2xl mb-3"
           placeholder="Password"
+          className="rounded-xl"
+          underlineColor="transparent"
+          mode="flat"
+          secureTextEntry={true}
+          returnKeyType="next"
+          onChangeText={text => setpassword(text)}
         />
+        <TouchableOpacity  onPress={() => handleForgotPassword()}>
+    <Text style={{ color: 'blue', textAlign: 'left', marginTop: 6 }}>
+      Forgot Password?
+    </Text>
+  </TouchableOpacity>
 
-        <TouchableOpacity className="py-4  bg-yellow-400 rounded-xl">
-          <Text className="text-xl font-bold text-center text-gray-700">
-            LogIn
-          </Text>
-        </TouchableOpacity>
-        <View  >
-          <Text className="text-center justify-center align-middle text-gray-700">
-            Don't have an account?{' '}
-            <TouchableOpacity onPress={()=>navigation.navigate('Signup')}>
-            <Text className="text-yellow-400">Sign Up</Text>
-            </TouchableOpacity>
-          </Text>
+        <View className="my-6">
+          <Button
+            mode="contained"
+            className="mt-3"
+            loading={loading}
+            onPress={(e: GestureResponderEvent) => handleLogin(loginData)}>
+            <Text className="text-xl  font-bold text-center text-white">
+              Login
+            </Text>
+          </Button>
+          
         </View>
-        <View className="flex align-middle justify-center ">
+        
+        <View className="flex flex-row justify-center align-middle  ">
+          <Text
+            className="text-center   align-middle text-black"
+            variant="bodyLarge">
+            Don't have an account?{' '}
+          </Text>
+          <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
+            <Text className="text-violet-600" variant="bodyLarge">
+              SignUp
+            </Text>
+          </TouchableOpacity>
+        </View>
+        {/* <View className="flex align-middle justify-center ">
           <Text className="text-xl text-gray-700 text-center font-bold">
             Or
           </Text>
@@ -80,7 +137,7 @@ const Login = () => {
               source={require('../../assets/images/google.png')}
             />
           </TouchableOpacity>
-        </View>
+        </View> */}
       </View>
     </SafeAreaView>
   );
