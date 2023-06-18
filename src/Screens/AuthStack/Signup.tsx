@@ -6,8 +6,10 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   Alert,
+  GestureResponderEvent,
 } from 'react-native';
 import React from 'react';
+import {useEffect} from 'react';
 import {TouchableOpacity} from 'react-native';
 import {ArrowLeftIcon} from 'react-native-heroicons/solid';
 import {useNavigation} from '@react-navigation/native';
@@ -15,37 +17,52 @@ import {TextInput} from 'react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {AuthRootStackParamList} from '../../navigation/AuthStack';
 import {useState} from 'react';
-import { useAppDispatch, useAppSelector } from '../../utils/hooks';
-import { registerUser } from '../../Redux/actions/action';
-import { addUser } from '../../Redux/slices/AuthUserSlice';
-import { useDispatch, useSelector } from 'react-redux';
-const Signup = () => {
+import {useAppDispatch, useAppSelector} from '../../utils/hooks';
+import {registerUser} from '../../Redux/actions/action';
+import { registerDatatypes } from '../../utils/types';
+import {addUser} from '../../Redux/slices/AuthUserSlice';
 
+import {useDispatch, useSelector} from 'react-redux';
+const Signup = () => {
   const [name, setname] = useState('');
   const [email, setemail] = useState('');
   const [password, setpassword] = useState('');
+  const [password2, setpassword2] = useState('');
   const [confirmpassword, setconfirmpassword] = useState('');
   const data = {
-    email:"tesdssxxnsdfsdfxsdsdfsfsfdsdffdffsdft1@gmail.com",
-    name:"sdfsdf",
-    password: "hello",
-    password2: "hello"
+    email: email,
+    name: name,
+    password: password,
+    password2: password2,
   };
   const dispatch = useAppDispatch();
 
-  const loading = useAppSelector(state => state.authUser.loading);
-  const accessToken = useAppSelector(state => state.authUser.accessToken);
-  const refreshToken = useAppSelector(state => state.authUser.refreshToken);
-  const error = useAppSelector(state => state.authUser.error);
-
-  
-  
   const navigation =
     useNavigation<NativeStackNavigationProp<AuthRootStackParamList>>();
+  const {loading, error, success} = useAppSelector(state => state.authUser);
+
+  useEffect(() => {
+    if (success) {
+      navigation.navigate('Login');
+      dispatch(addUser({success: false}));
+      Alert.alert('User Registered Successfully')
+
+    }
+  }, [success]);
+
+  const handleRegister = (data: registerDatatypes) => {
+    if(password !== password2){
+      console.log('here')
+      Alert.alert('Password does not match')
+      return;
+    }
+    dispatch(registerUser(data)); 
+   
+  }
+
 
   return (
     <SafeAreaView className="flex-1">
-
       <View className="flex-row justify-start">
         <TouchableOpacity
           onPress={() => navigation.goBack()}
@@ -56,17 +73,23 @@ const Signup = () => {
       <Text className="text-4xl text-center font-bold text-blue-900 ">
         SignUp
       </Text>
+      {error && (
+        <Text className="text-red-500 text-center mt-2 font-bold text-xl">
+          {error}
+        </Text>
+      ) }
+
       <ScrollView
         className="flex-1  bg-white my-5  p-6 space-y-2"
         style={{borderTopLeftRadius: 50, borderTopRightRadius: 50}}>
-           <Text className="justify-center text-xl text-gray-700 font-bold my-2">
+        <Text className="justify-center text-xl text-gray-700 font-bold my-2">
           {' '}
           Name
         </Text>
         <TextInput
           className="p-4 bg-gray-200 text-gray-700 rounded-2xl mb-3"
           placeholder="Name"
-          onChangeText={(text)=>setname(text)}
+          onChangeText={text => setname(text)}
         />
         <Text className="justify-center text-xl text-gray-700 font-bold my-2">
           {' '}
@@ -75,7 +98,7 @@ const Signup = () => {
         <TextInput
           className="p-4 bg-gray-200 text-gray-700 rounded-2xl mb-3"
           placeholder="Username"
-          onChangeText={(text)=>setemail(text)}
+          onChangeText={text => setemail(text)}
         />
         <Text className="justify-center text-xl text-gray-700 font-bold">
           {' '}
@@ -84,7 +107,7 @@ const Signup = () => {
         <TextInput
           className="p-4 bg-gray-200 text-gray-700 rounded-2xl mb-3"
           placeholder="Password"
-          onChangeText={(text)=>setpassword(text)}
+          onChangeText={text => setpassword(text)}
         />
         <Text className="justify-center text-xl text-gray-700 font-bold">
           {' '}
@@ -93,17 +116,17 @@ const Signup = () => {
         <TextInput
           className="p-4 bg-gray-200 text-gray-700 rounded-2xl mb-3"
           placeholder="Confirm password"
-          onChangeText={(text)=>setconfirmpassword(text)}
+          onChangeText={text => setpassword2(text)}
         />
 
-        <TouchableOpacity className="py-4  bg-yellow-400 rounded-xl"
-                  onPress= {(e) => dispatch(registerUser(data))}
-                  
-        >
+        <TouchableOpacity
+          className="py-4  bg-yellow-400 rounded-xl"
+          onPress={(e: GestureResponderEvent)=> handleRegister(data)}>
           <Text className="text-xl font-bold text-center text-gray-700">
             SignUp
           </Text>
         </TouchableOpacity>
+        {loading && <Text className="text-center text-xl font-bold text-gray-700">Loading...</Text> }
         <View>
           <Text className="text-center justify-center align-middle text-gray-700">
             Have an account?{' '}
@@ -121,8 +144,7 @@ const Signup = () => {
         <View className="flex-row justify-center py-2">
           <TouchableOpacity
             className="py-3 bg-gray-200 items-center justify-center rounded-xl "
-            style={{width: 50, height: 50}}
-            >
+            style={{width: 50, height: 50}}>
             <Image
               style={{
                 width: 40,

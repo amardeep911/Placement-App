@@ -1,32 +1,46 @@
-import {createAsyncThunk} from '@reduxjs/toolkit';
+import {SerializedError, createAsyncThunk} from '@reduxjs/toolkit';
 import {ReduxModel} from '../../utils/types';
-import axios from 'axios';
+import axios, {AxiosError} from 'axios';
+
+interface registerDatatypes {
+    email: string;
+    password: string;
+    name: string;
+    password2: string;
+}
+interface MyKnownError  {
+    message: string;
+}
+type myData = {
+    token: {
+        access: string;
+        refresh: string;
+    };
+    msg: string;
+}
+
 
 
 export const registerUser = createAsyncThunk(
-  'authUser/registerUser',
-  async (
-    data: {email: string; name: string; password: string; password2: string},
-    {rejectWithValue},
-  ) => {
-    try {
-    const response =  await axios
-        .post('http://10.0.2.2:8000/api/user/register/',
-        data,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        })
-
+    'authUser/registerUser',
+    async (data: registerDatatypes , { rejectWithValue }) => {
+      try {
+        const response = await axios.post('http://127.0.0.1:8000/api/user/register/', data);
         return response.data;
-
-    } catch (error) {
-       
-      return rejectWithValue(error.response.data);
+      } catch (error: any) {
+          if (axios.isAxiosError(error)) {
+            console.log(error.response?.data)
+            console.log(error)
+            return rejectWithValue(error.response?.data);
+            
+        } else {
+          console.log('Error', error.message);
+        }
+        return rejectWithValue(error.message);
+      }
     }
-  },
-);
+  );
+    
 // export const registerUser = createAsyncThunk(
 //     'authUser/registerUser',
 //     async (data, {rejectWithValue} ) => {

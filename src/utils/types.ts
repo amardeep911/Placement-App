@@ -4,5 +4,13 @@ export type ReduxModel = {
     accessToken: string,
     refreshToken: string,
     loading: boolean,
-    error: boolean,
+    error: string,
+    success: boolean,
 };
+
+export type registerDatatypes = {
+    email: string,
+    password: string,
+    name: string,
+    password2: string,
+}
