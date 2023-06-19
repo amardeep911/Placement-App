@@ -18,10 +18,10 @@ import {loginDatatypes} from '../../utils/types';
 import {Alert} from 'react-native';
 import {Button} from 'react-native-paper';
 import {GestureResponderEvent} from 'react-native';
-
+import {RootState} from '../../Redux/store';
 
 import {loginUser} from '../../Redux/actions/action';
-import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
+
 const Login = () => {
   const [email, setemail] = useState('');
   const [password, setpassword] = useState('');
@@ -32,27 +32,18 @@ const Login = () => {
   };
   const error = useAppSelector(state => state.authUser.error);
   const loading = useAppSelector(state => state.authUser.loading);
-  const success = useAppSelector(state => state.authUser.success);
+
   const dispatch = useAppDispatch();
 
   const handleLogin = (data: loginDatatypes) => {
     dispatch(loginUser(data));
   };
   const handleForgotPassword = () => {
-    Alert.alert('Forgot Password'
-    ,'Feature under development');
+    Alert.alert('Forgot Password', 'Feature under development');
   };
-  useEffect(() => {
-    if (success) {
-      Alert.alert('User Logged in Successfully');
-    }
-  }, [success]);
+
   const navigation =
     useNavigation<NativeStackNavigationProp<AuthRootStackParamList>>();
-
-
-
-
   return (
     <SafeAreaView className="flex-1 bg-violet-50">
       <Text className="text-4xl text-center font-extrabold mt-8 text-blue-900 ">
@@ -92,11 +83,11 @@ const Login = () => {
           returnKeyType="next"
           onChangeText={text => setpassword(text)}
         />
-        <TouchableOpacity  onPress={() => handleForgotPassword()}>
-    <Text style={{ color: 'blue', textAlign: 'left', marginTop: 6 }}>
-      Forgot Password?
-    </Text>
-  </TouchableOpacity>
+        <TouchableOpacity onPress={() => handleForgotPassword()}>
+          <Text style={{color: 'blue', textAlign: 'left', marginTop: 6}}>
+            Forgot Password?
+          </Text>
+        </TouchableOpacity>
 
         <View className="my-6">
           <Button
@@ -108,9 +99,8 @@ const Login = () => {
               Login
             </Text>
           </Button>
-          
         </View>
-        
+
         <View className="flex flex-row justify-center align-middle  ">
           <Text
             className="text-center   align-middle text-black"

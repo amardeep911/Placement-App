@@ -2,6 +2,7 @@ import {createSlice} from '@reduxjs/toolkit';
 import {ReduxModel} from '../../utils/types';
 import {registerUser} from '../actions/action';
 import {loginUser} from '../actions/action';
+import { PayloadAction } from '@reduxjs/toolkit';
 
 import { saveTokensToStorage } from '../../utils/localStorage';
 
@@ -23,10 +24,12 @@ const AuthUserSLice = createSlice({
   reducers: {
     addUser: (state, action) => {
       state.success = false;
+      state.isAuth = action.payload.isAuth;
     },
     setTokens: (state, action) => {
         state.accessToken = action.payload.accessToken;
-        state.isAuth = true;
+        state.refreshToken = action.payload.refreshToken;
+        state.isAuth = action.payload.isAuth;
         state.navLoading = false;
 
         }
@@ -36,7 +39,7 @@ const AuthUserSLice = createSlice({
     builder.addCase(setTokens, (state, action) => {
         state.accessToken = action.payload.access;
         state.refreshToken = action.payload.refresh;
-        state.isAuth = true;
+        state.isAuth = action.payload.isAuth;
         });
     // Login User
     builder.addCase(loginUser.pending, (state, action) => {

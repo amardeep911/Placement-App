@@ -4,22 +4,27 @@ import { useAppSelector } from '../utils/hooks';
 import { useAppDispatch } from '../utils/hooks';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect } from 'react';
-import { setTokens } from '../Redux/slices/AuthUserSlice';
+import { addUser, setTokens } from '../Redux/slices/AuthUserSlice';
+import { RootState } from '../Redux/store';
+
 
 const LoadingStack = () => {
 
 
+
   const dispatch = useAppDispatch();
-
-
-
   useEffect(() => {
     const checkLocalStorage = async () => {
       try {
         const accessToken = await AsyncStorage.getItem('accessToken');
+        const refreshToken = await AsyncStorage.getItem('refreshToken');
         const accessTokenWithoutSlash = JSON.parse(accessToken || '{}');
-        if (accessToken) {
-          dispatch(setTokens({ accessToken: accessTokenWithoutSlash, isAuth: true }))
+        const refreshTokenWithoutSlash = JSON.parse(refreshToken || '{}');
+        if (accessToken && refreshToken) {
+          dispatch(setTokens({ accessToken: accessTokenWithoutSlash, isAuth: true, refreshToken: refreshTokenWithoutSlash }))
+        }
+        else{
+          dispatch(setTokens({ isAuth: false, accessToken: '', refreshToken: '' }))
         }
       } catch (error) {
         console.log('Error accessing local storage:', error);

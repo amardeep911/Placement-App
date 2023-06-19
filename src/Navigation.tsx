@@ -13,10 +13,11 @@ const Navigation = () => {
 
 
     const isAuth = useAppSelector(state => state.authUser.isAuth);
-
+    
   
   return (
     <NavigationContainer>
+
       {navLoading ? (<LoadingStack /> ): isAuth ? (<AppStack/>): (<AuthStack/>) }
     </NavigationContainer>
   )
