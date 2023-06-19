@@ -12,6 +12,8 @@ export type ReduxModel = {
     success: boolean,
     accessToken: string,
     refreshToken: string,
+    isAuth: boolean,
+    navLoading: boolean,
 };
 
 export type loginDatatypes = {

@@ -4,14 +4,20 @@ import React, { useState } from 'react'
 import LoadingStack from './navigation/LoadingStack';
 import AppStack from './navigation/AppStack';
 import AuthStack from './navigation/AuthStack';
-
-
+import { useAppDispatch } from './utils/hooks';
+import { useAppSelector } from './utils/hooks';
 const Navigation = () => {
-    const [isLoading, setisLoading] = useState(false);
-    const [isAuth, setisAuth] = useState(false);
+
+  const dispatch = useAppDispatch();
+  const navLoading = useAppSelector(state => state.authUser.navLoading);
+
+
+    const isAuth = useAppSelector(state => state.authUser.isAuth);
+
+  
   return (
     <NavigationContainer>
-      {isLoading ? (<LoadingStack/> ): isAuth ? (<AppStack/>): (<AuthStack/>) }
+      {navLoading ? (<LoadingStack /> ): isAuth ? (<AppStack/>): (<AuthStack/>) }
     </NavigationContainer>
   )
 }
