@@ -44,8 +44,7 @@ const Signup = () => {
   useEffect(() => {
     if (success) {
       dispatch(addUser({success: false}));
-      navigation.navigate('Login');
-      Alert.alert('User Registered Successfully');
+      navigation.navigate('Verify');
     }
   }, [success]);
 

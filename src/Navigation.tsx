@@ -6,6 +6,7 @@ import AppStack from './navigation/AppStack';
 import AuthStack from './navigation/AuthStack';
 import { useAppDispatch } from './utils/hooks';
 import { useAppSelector } from './utils/hooks';
+import Verify from './Screens/AuthStack/Verify';
 const Navigation = () => {
 
   const dispatch = useAppDispatch();
@@ -17,8 +18,8 @@ const Navigation = () => {
   
   return (
     <NavigationContainer>
-
-      {navLoading ? (<LoadingStack /> ): isAuth ? (<AppStack/>): (<AuthStack/>) }
+<LoadingStack/>
+      {/* {navLoading ? (<LoadingStack /> ): isAuth ? (<AppStack/>): (<AuthStack/>) } */}
     </NavigationContainer>
   )
 }
